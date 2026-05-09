@@ -12,16 +12,16 @@
 
 | Campo                                       | Valor                                         |
 |---------------------------------------------|-----------------------------------------------|
-| Nome                                        | [seu nome completo]                           |
-| RA                                          | [seu RA]                                      |
+| Nome                                        | Bruno Santos Araújo                           |
+| RA                                          | 0050482413015                                 |
 | Disciplina                                  | Redes de Computadores                         |
-| Turma                                       | [sua turma]                                   |
-| Data                                        | [data da realização]                          |
+| Turma                                       | ADS Noturno                                   |
+| Data                                        | 09-05-2026                                    |
 | Fluxo                                       | **B — Aluno sem privilégio de administrador** |
-| SO utilizado                                | [Windows 10/11]                               |
+| SO utilizado                                | Windows 11                                    |
 | Ferramenta de proxy                         | Fiddler Classic per-user                      |
-| Navegador(es)                               | [Chrome 124 / Firefox 125 / ...]              |
-| HTTPS-First Mode / HTTPS-Only desabilitado? | [sim / não]                                   |
+| Navegador(es)                               | Microsoft Edge                                |
+| HTTPS-First Mode / HTTPS-Only desabilitado? | Sim                                           |
 
 ---
 
@@ -32,30 +32,35 @@
 **Request-line enviada:**
 
 ```http
-[colar aqui a linha inicial do request, ex: GET / HTTP/1.1]
+GET http://example.com/ HTTP/1.1
 ```
 
 **Status-line recebida:**
 
 ```http
-[colar aqui, ex: HTTP/1.1 200 OK]
+HTTP/1.1 200 OK
 ```
 
 ### Pergunta 1.1
 > Quantos cabeçalhos o navegador enviou no request? Liste-os.
 
 **Resposta:**
-[número total]
+8
 
 Cabeçalhos:
-- [cabeçalho 1]
-- [cabeçalho 2]
-- ...
+Host: example.com
+Connection: keep-alive
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 Edg/148.0.0.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate
+Accept-Language: pt-BR,pt;q=0.9
 
 ### Pergunta 1.2
 > Qual foi o `Content-Length` da resposta? Se ele não apareceu, registre `Transfer-Encoding`, versão do protocolo ou outro indício observado. O corpo retornado é HTML, texto puro, JSON ou binário? Como você descobriu?
 
-**Resposta:** [...]
+**Resposta:** Content-Length: 528. O corpo retornado é em HTML, fica claro pela estrutrura, começando com <!doctype html>
 
 ---
 
@@ -66,36 +71,44 @@ Cabeçalhos:
 **Request-line completa:**
 
 ```http
-[colar aqui]
+GET http://httpbin.org/get?aluno=BRUNO_SANTOS_ARAUJO&curso=redes HTTP/1.1
 ```
 
 **Cabeçalhos-chave capturados:**
 
-| Cabeçalho    | Valor                    |
-|--------------|--------------------------|
-| `Host`       | [...]                    |
-| `User-Agent` | [...]                    |
-| `Accept`     | [...]                    |
+| Cabeçalho    | Valor                                                                                                                                   |
+|--------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `Host`       | httpbin.org                                                                                                                             |
+| `User-Agent` | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36                         |
+| `Accept`     | text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7 |
 
 **Campos do JSON de resposta:**
 
 ```json
 {
-  "args":    [colar valor],
-  "headers": [colar valor resumido],
-  "origin":  [colar valor]
+  "args":
+             aluno=BRUNO_SANTOS_ARAUJO
+             curso=redes
+  "headers":
+             Aceppt=text[...]
+             Accept-Language=pt-BR[...]
+             Host=httpbin.org
+             Upgrade-Insecure-Requests=1
+             User-Agent=Mozila[...]
+             X-Amzn-Trace-ID=Root=[...]
+  "origin":  187.58.19.47
 }
 ```
 
 ### Pergunta 2.1
 > O valor do campo `origin` corresponde a qual elemento da rede? Por que normalmente não é o IP local?
 
-**Resposta:** [...]
+**Resposta:** Corresponde ao ip de origem que gerou a resposta, então é o ip do server, não o da máquina local.
 
 ### Pergunta 2.2
 > Compare o `User-Agent` enviado com o que aparece no JSON da resposta. Coincidem?
 
-**Resposta:** [...]
+**Resposta:** Sim, correspondem, ambos apresentam essa informação: User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36
 
 ### Pergunta 2.3
 > Em `http://httpbin.org/headers`, liste até três cabeçalhos que o servidor vê mas **não aparecem** no Raw do request. De onde vêm? Se não encontrar três, explique por que o resultado pode variar.
@@ -104,7 +117,7 @@ Cabeçalhos:
 
 | Cabeçalho visto pelo servidor | Origem provável | Observação |
 |-------------------------------|-----------------|------------|
-| [...]                         | [...]           | [...]      |
+| "X-Amzn-Trace-Id"             | [...]           | [...]      |
 | [...]                         | [...]           | [...]      |
 | [...]                         | [...]           | [...]      |
 
